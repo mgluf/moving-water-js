@@ -1,7 +1,19 @@
 <script>
+
+  // 00055	Physical	Stream velocity, feet per second
+  // 00056	Physical	Flow rate of well, gallons per day
+  // 00058	Physical	Flow rate of well, gallons per minute
+  // 00059	Physical	Flow rate, instantaneous, gallons per minute
+  // 00060	Physical	Discharge, cubic feet per second
+  // 00061	Physical	Discharge, instantaneous, cubic feet per second
+  // 00081	Physical	Apparent color, water, unfiltered, platinum-cobalt units
+  // 00164	Physical	Flow, gallons per batch
+
+
+
   let myBody
 	const userAction = async () => {
-  const response = await fetch('https://waterservices.usgs.gov/nwis/iv/?format=json&stateCd=nc&parameterCd=00060,00065&siteType=ST&siteStatus=all', {
+  const response = await fetch('https://waterservices.usgs.gov/nwis/iv/?format=json&stateCd=nc&parameterCd=00060&siteType=ST&siteStatus=active', {
     method: 'POST',
     body: myBody, // string or object
     headers: {
