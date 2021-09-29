@@ -10,22 +10,41 @@
   // 00164	Physical	Flow, gallons per batch
 
 
+  let parsed = {
+    discharge: [],
+    streamName: [],
+  }
+  
+  function parseFlow(data) {
+    data.value.timeSeries.forEach(e => {
+      parsed.discharge.push(e.values[0].value[0].value)
+      parsed.streamName.push(e.sourceInfo.siteName)
+    });
+    console.log("Parsed", parsed);
+  }
 
-  let myBody
-	const userAction = async () => {
-  const response = await fetch('https://waterservices.usgs.gov/nwis/iv/?format=json&stateCd=nc&parameterCd=00060&siteType=ST&siteStatus=active', {
-    method: 'POST',
-    body: myBody, // string or object
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-  const myJson = await response.json(); //extract JSON from the http response
-  // do something with myJson
-  console.log(myJson);
-}
+	const fetchData = async () => {
+    let myBody
+    const response = await fetch('https://waterservices.usgs.gov/nwis/iv/?format=json&stateCd=nc&parameterCd=00060,00011&siteType=ST&siteStatus=active', {
+      method: 'POST',
+      body: myBody, // string or object
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const myJson = await response.json(); //extract JSON from the http response
+    console.log("RAW JSON", myJson)
+    parseFlow(myJson)
+  }
 
-userAction()
+
+
+  fetchData()
+
+
+
+
+
 
 
 
