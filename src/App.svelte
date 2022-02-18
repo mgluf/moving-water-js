@@ -1,58 +1,45 @@
 <script>
+import { onMount } from "svelte";
+// import { parse } from "parse.js";
 
-  // 00055	Physical	Stream velocity, feet per second
-  // 00056	Physical	Flow rate of well, gallons per day
-  // 00058	Physical	Flow rate of well, gallons per minute
-  // 00059	Physical	Flow rate, instantaneous, gallons per minute
-  // 00060	Physical	Discharge, cubic feet per second
-  // 00061	Physical	Discharge, instantaneous, cubic feet per second
-  // 00081	Physical	Apparent color, water, unfiltered, platinum-cobalt units
-  // 00164	Physical	Flow, gallons per batch
+let filter;
 
-
-  let parsed = {
-    discharge: [],
-    streamName: [],
-  }
+function parse(data) {
   
-  function parseFlow(data) {
-    data.value.timeSeries.forEach(e => {
-      parsed.discharge.push(e.values[0].value[0].value)
-      parsed.streamName.push(e.sourceInfo.siteName)
-    });
-    console.log("Parsed", parsed);
-  }
+  let parsed = []
+  let items = data.items
 
-	const fetchData = async () => {
-    let myBody
-    const response = await fetch('https://waterservices.usgs.gov/nwis/iv/?format=json&stateCd=nc&parameterCd=00060,00011&siteType=ST&siteStatus=active', {
-      method: 'POST',
-      body: myBody, // string or object
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    const myJson = await response.json(); //extract JSON from the http response
-    console.log("RAW JSON", myJson)
-    parseFlow(myJson)
-  }
+  parsed = items.map(obj => ({
+    label: obj.label,
+    notation: obj.notation,
+    river: obj.riverName,
+    // sometimes measures has more than one object, which will throw an undefined
+    measure: obj.measures.label,
+    unit: obj.measures.unitName,
+  }))
 
+  return parsed
+}
 
-
-  fetchData()
-
-
-
-
-
-
-
+onMount(async () => {
+  fetch("https://environment.data.gov.uk/hydrology/id/stations?_limit=20&observedProperty=waterFlow")
+  .then(response => response.json())
+  .then(data => {
+    console.log("raw", data);
+    filter = parse(data);
+    console.log("parsed", filter);
+  }).catch(error => {
+    console.log(error);
+    return [];
+  });
+});
 
 </script>
 
 <main>
-	<h1>Hello</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<h1>River Water</h1>
+  <div>
+  </div>
 </main>
 
 <style>
