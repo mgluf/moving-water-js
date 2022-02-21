@@ -1,33 +1,16 @@
 <script>
 import { onMount } from "svelte";
-// import { parse } from "parse.js";
+import parse  from "./parse.js";
 
-let filter;
-
-function parse(data) {
-  
-  let parsed = []
-  let items = data.items
-
-  parsed = items.map(obj => ({
-    label: obj.label,
-    notation: obj.notation,
-    river: obj.riverName,
-    // sometimes measures has more than one object, which will throw an undefined
-    measure: obj.measures.label,
-    unit: obj.measures.unitName,
-  }))
-
-  return parsed
-}
+let rivers
 
 onMount(async () => {
   fetch("https://environment.data.gov.uk/hydrology/id/stations?_limit=20&observedProperty=waterFlow")
   .then(response => response.json())
   .then(data => {
     console.log("raw", data);
-    filter = parse(data);
-    console.log("parsed", filter);
+    rivers = parse(data)
+    console.log("parsed", rivers);
   }).catch(error => {
     console.log(error);
     return [];
