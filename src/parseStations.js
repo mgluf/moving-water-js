@@ -1,6 +1,7 @@
-export default function parse(data){
+export default function parseStations(data){
   let items = data.items
   let parsed = [];
+
   items.map(obj => {
 
     if (obj.measures.length > 1) {
@@ -29,5 +30,6 @@ export default function parse(data){
       ) 
     }
   });
-  return parsed
+
+return parsed
 }

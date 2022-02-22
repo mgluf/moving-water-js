@@ -1,9 +1,10 @@
 <script>
 import { onMount } from "svelte";
-import parse  from "./parse.js";
-import fetchReadings from "./fetch.js";
+import parseStations  from "./parseStations.js";
+import fetchReadings from "./fetchReadings.js";
 
-let rivers
+let stations
+let readings
 
 // Pull 20 Stations with a waterFlow measurement
 onMount(
@@ -12,11 +13,13 @@ onMount(
 		.then(response => response.json())
 		.then(data => {
 			console.log("raw", data);
-			rivers = parse(data)
-			console.log("stations", rivers);
+			stations = parseStations(data)
+			console.log("stations", stations);
 
-			//fetch latest readings from 5 days ago up to now.
-			fetchReadings(rivers[0].notation, 5)
+			// pull readings from each station from 4 days ago to today
+			stations.map(station => {
+				fetchReadings(station.notation, 4)
+			})
 
 
 		}).catch(error => {

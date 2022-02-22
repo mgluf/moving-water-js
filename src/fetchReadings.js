@@ -1,3 +1,5 @@
+import parseReadings from "./parseReadings";
+
 export default function fetchReadings(notation, days){
 
 let today = new Date();
@@ -17,12 +19,13 @@ const prefix = "https://environment.data.gov.uk/hydrology"
 fetch(prefix + "/id/measures/" + notation + "-flow-m-86400-m3s-qualified/readings?mineq-date="+ formatted)
 		.then(response => response.json())
 		.then(data => {
-			console.log("[Station 0] Readings from " + days + " days ago to today", "\n" , data);
+			
+			// console.log("fetchReadings RAW", "\n" , data);
+			console.log("parsedReadings", parseReadings(data));
 
 		}).catch(error => {
 			console.log(error);
 			return [];
 		});
-
 return fetched
 }
