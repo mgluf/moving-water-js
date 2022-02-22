@@ -1,20 +1,28 @@
 <script>
 import { onMount } from "svelte";
 import parse  from "./parse.js";
+import fetchReadings from "./fetch.js";
 
 let rivers
 
-onMount(async () => {
-  fetch("https://environment.data.gov.uk/hydrology/id/stations?_limit=20&observedProperty=waterFlow")
-  .then(response => response.json())
-  .then(data => {
-    console.log("raw", data);
-    rivers = parse(data)
-    console.log("parsed", rivers);
-  }).catch(error => {
-    console.log(error);
-    return [];
-  });
+// Pull 20 Stations with a waterFlow measurement
+onMount(
+	async () => {
+		fetch("https://environment.data.gov.uk/hydrology/id/stations?_limit=20&observedProperty=waterFlow")
+		.then(response => response.json())
+		.then(data => {
+			console.log("raw", data);
+			rivers = parse(data)
+			console.log("stations", rivers);
+
+			//fetch latest readings from 5 days ago up to now.
+			fetchReadings(rivers[0].notation, 5)
+
+
+		}).catch(error => {
+			console.log(error);
+			return [];
+		});
 });
 
 </script>
