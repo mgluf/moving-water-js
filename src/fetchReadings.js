@@ -12,7 +12,11 @@ let day = priorDate.getUTCDate();
 let year = priorDate.getUTCFullYear();
 formatted =  year + '-' + ('0' + month).slice(-2) + '-' + ('0' + day).slice(-2);
 
-// make API call with provided notation and date
+
+
+
+
+// make API call with provided notation and days back to look for readings
 let fetched
 const prefix = "https://environment.data.gov.uk/hydrology"
 
@@ -21,11 +25,16 @@ fetch(prefix + "/id/measures/" + notation + "-flow-m-86400-m3s-qualified/reading
 		.then(data => {
 			
 			// console.log("fetchReadings RAW", "\n" , data);
-			console.log("parsedReadings", parseReadings(data));
+			console.log("parseReadings", parseReadings(data));
+			fetched = parseReadings(data);
+			
 
 		}).catch(error => {
 			console.log(error);
 			return [];
 		});
+
+console.log("fetchReadings", fetched)
+
 return fetched
 }
