@@ -22,9 +22,8 @@ const prefix = "https://environment.data.gov.uk/hydrology"
 return await fetch(prefix + "/id/measures/" + notation + "-flow-m-86400-m3s-qualified/readings?mineq-date="+ formatted)
 		.then(response => response.json())
 		.then(data => {
-			
+			// console.log(data)
 			fetched = parseReadings(data);
-      // console.log("fetched", fetched)
 			return fetched;
 
 		}).catch(error => {

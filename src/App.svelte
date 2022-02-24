@@ -4,7 +4,6 @@ import parseStations  from "./parseStations.js";
 import fetchReadings from "./fetchReadings.js";
 
 let stations
-let readings = [];
 
 // Pull 20 Stations with a waterFlow measurement
 onMount(
@@ -14,14 +13,12 @@ onMount(
 		.then(async (data) => {
 			console.log("raw", data);
 			stations = parseStations(data)
-			console.log("stations", stations);
 
 			// pull readings from each station from 4 days ago to today
       for (const station of stations) {
-        readings.push(await fetchReadings(station.notation, 4))				
+				station.readings = await fetchReadings(station.notation, 4);				
       }
-
-      console.log("readings", readings)
+			console.log("stations with readings", "\n", stations);
 
 		}).catch(error => {
 			console.log(error);
