@@ -2,45 +2,28 @@
   export let data;
   console.log("infoBar", data)
 
-  let selected;
-  
+  let selected = 0;
   
 </script>
 
 <nav class="info-bar">
-  <select bind:value={selected} class='form-control'>
+  <select bind:value={selected} class='river-select'>
     {#each data as station, i}
       <option value={i}>{station.label}</option>
     {/each}
   </select>
 
-  {#if selected}
-    <ul>
-      <li>{data[selected].river}</li>
-      <li>{data[selected].label}</li>
-      <li>
-        {data[selected].readings.value}
-        {data[selected].unit}
-      </li>
-      <li>{data[selected].measure}</li>
-      <li>Data recorded on {data[selected].readings.date}</li>
-    </ul>
-  {/if}
-
-
-
-  <!-- {#each data as station}
-  <ul>
-    <li>{station.river}</li>
-    <li>{station.label}</li>
+  <ul class="river-data">
+    <li>{data[selected].river}</li>
+    <li>{data[selected].label}</li>
     <li>
-      {station.readings.value}
-      {station.unit}
+      {data[selected].readings.value}
+      {data[selected].unit}
     </li>
-    <li>{station.measure}</li>
-    <li>Data recorded on {station.readings.date}</li>
+    <li>{data[selected].measure}</li>
+    <li>Data recorded on {data[selected].readings.date}</li>
   </ul>
-  {/each} -->
+
 </nav>
 
 
