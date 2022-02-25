@@ -7,29 +7,37 @@ import InfoBar from "./components/InfoBar.svelte"
 
 let stations
 
+
 // Pull 20 Stations with a waterFlow measurement
-onMount(
-	async () =>  {
-		fetch("https://environment.data.gov.uk/hydrology/id/stations?_limit=20&observedProperty=waterFlow")
+async function allData()  {
+		await fetch("https://environment.data.gov.uk/hydrology/id/stations?_limit=20&observedProperty=waterFlow")
 		.then(response => response.json())
 		.then(async (data) => {
 			console.log("raw", data);
+      // filter unwanted data from station pull and build stations object
 			stations = parseStations(data)
-			// pull readings from each station from 4 days ago to today and add readings to them
+			// pull readings from each station from 4 days ago to today and add parsed readings to them
 			for (const station of stations) {station.readings = await fetchReadings(station.notation, 4);}
-			console.log("onMount", stations)
+			// console.log("onMount", stations)
 	
 		}).catch(error => {
 			console.log(error);
 			return [];
 		});
-});
+
+  return stations
+}
+
+let promise = allData();
 
 </script>
 
-{#if stations}
-		<InfoBar stations={stations}/>
-{/if}
+
+{#await promise}
+		<div>loading...</div>
+    {:then stations}
+    <InfoBar data={stations}/>
+{/await}
 
 <style>
 
