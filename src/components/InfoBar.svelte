@@ -51,9 +51,7 @@
     background-color: lightgrey;
     margin: 0;
     padding: 0;
-    position: absolute;
     height: 100%;
-    max-width: 20%;
     padding:1rem;
   }
 

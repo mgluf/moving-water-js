@@ -36,6 +36,7 @@ let promise = allData();
 			{:then stations}
 			<div class="app">
 				<InfoBar data={stations}/>
+				<div class="river">test</div>
 			</div>
 		{/await}
 
@@ -45,7 +46,11 @@ let promise = allData();
 <style>
 	.app {
 		display: grid;
-		grid-template-columns: auto 1fr;
+		grid-template-columns: 35% 1fr;
 		height: 100%;
+	}
+
+	.river {
+		background-color: blue;
 	}
 </style>
