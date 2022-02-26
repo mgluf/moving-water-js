@@ -53,7 +53,7 @@
     padding: 0;
     position: absolute;
     height: 100%;
-    max-width: 30%;
+    max-width: 20%;
     padding:1rem;
   }
 
