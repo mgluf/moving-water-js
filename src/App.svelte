@@ -1,5 +1,4 @@
 <script>
-import { onMount } from "svelte";
 import parseStations  from "./data-functions/parseStations.js";
 import fetchReadings from "./data-functions/fetchReadings.js";
 
@@ -17,7 +16,7 @@ async function allData()  {
       // filter unwanted data from station pull and build stations object
 			stations = parseStations(data)
 			// pull readings from each station from 4 days ago to today and add parsed readings to them
-			for (const station of stations) {station.readings = await fetchReadings(station.notation, 4);}
+			for (const station of stations) {station.readings = await fetchReadings(station.notation, 7);}
 			// console.log("onMount", stations)
 	
 		}).catch(error => {
@@ -32,13 +31,21 @@ let promise = allData();
 
 </script>
 
+		{#await promise}
+			<div>loading...</div>
+			{:then stations}
+			<div class="app">
+				<InfoBar data={stations}/>
+			</div>
+		{/await}
 
-{#await promise}
-		<div>loading...</div>
-    {:then stations}
-    <InfoBar data={stations}/>
-{/await}
+
+
 
 <style>
-
+	.app {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		height: 100%;
+	}
 </style>
