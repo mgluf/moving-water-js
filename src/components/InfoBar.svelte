@@ -2,16 +2,8 @@
   export let data;
   console.log("infoBar", data)
 
-  let selected = 0;
+  export let selected = 0;
   let valid = true;
-
-  function checkValid(){
-      if (data[selected].readings.value === 0){
-      valid = false
-    } else { valid = true}
-
-    return valid
-  }
 
   
 </script>
@@ -31,15 +23,8 @@
     {/if}
   </div>
   <div class="river-select-container">
-    <p>Select Locale</p>
-    <select 
-      class='river-select' 
-      bind:value={selected}
-    >
-      {#each data as station, i}
-        <option value={i}>{station.label}</option>
-      {/each}
-    </select>
+    <!-- moved selected to app.svelte so p5 sketch can access it -->
+    <slot/>
   </div>
   <div class="map"></div>
   <div class="footer">Created by Matt Gluf</div>
@@ -78,19 +63,6 @@
 
   .measure-data h3{
     color: black;
-  }
-
-  .river-select-container p {
-    font-family: monospace;
-    font-size: 14px;
-    margin-bottom: 3px;
-    margin-top: 3rem;
-    margin-left: 1px;
-    color: #575656;
-  }
-
-  select {
-    font-size: 18px;
   }
 
   .footer{

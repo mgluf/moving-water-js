@@ -4,7 +4,6 @@ import P5 from 'p5-svelte';
 import parseStations  from "./data-functions/parseStations.js";
 import fetchReadings from "./data-functions/fetchReadings.js";
 import InfoBar from "./components/InfoBar.svelte"
-import "./data-functions/river.js"
 
 let stations
 
@@ -29,8 +28,9 @@ async function allData()  {
 }
 
 let promise = allData();
+let selected = 0; // current station (equivilant to index of station in array)
 
-
+// VISUALIZATION
 const sketch = (p5) => {
 		//https://www.openprocessing.org/sketch/157576
 		var num = 2000;
@@ -52,10 +52,9 @@ const sketch = (p5) => {
 		}
 		
 		p5.windowResized = () => {
-			p5.resizeCanvas(windowWidth, windowHeight);
+			p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
 		}
 		p5.draw = () => {
-			// background(0);
 			p5.fill(0, 10);
 			p5.noStroke();
 			p5.rect(0, 0, p5.width, p5.height);
@@ -81,7 +80,7 @@ const sketch = (p5) => {
 				this.dir.x = p5.cos(angle);
 				this.dir.y = p5.sin(angle);
 				var vel = this.dir.copy();
-				var d = 3;  //direction change 
+				var d = (stations[selected].readings.value) * 2;  //direction change 
 				vel.mult(this.speed*d); //vel = vel * (speed*d)
 				this.loc.add(vel); //loc = loc + vel
 			}
@@ -100,13 +99,25 @@ const sketch = (p5) => {
 		}
   };
 
+
+
 </script>
 
 		{#await promise}
 			<div>loading...</div>
 			{:then stations}
 			<div class="app">
-				<InfoBar data={stations}/>
+				<InfoBar data={stations} bind:selected={selected}>
+					<p>Select Locale</p>
+					<select 
+						class='river-select'
+						bind:value={selected}
+					>
+						{#each stations as station, i}
+							<option value={i}>{station.label}</option>
+						{/each}
+    			</select>
+				</InfoBar>
 				<div class="river">
 					<P5 {sketch} />
 				</div>
@@ -126,4 +137,8 @@ const sketch = (p5) => {
 	.river {
 		background-color: blue;
 	}
+
+	select {
+    font-size: 18px;
+  }
 </style>
