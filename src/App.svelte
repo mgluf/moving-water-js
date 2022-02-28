@@ -116,10 +116,7 @@ const sketch = (p5) => {
 		<div class="app">
 			<InfoBar data={stations} bind:selected={selected}>
 				<p id="locale">Select Locale</p>
-				<select 
-					class='river-select'
-					bind:value={selected}
-				>
+				<select class='river-select' bind:value={selected}>
 					{#each stations as station, i}
 						<option value={i}>{station.label}</option>
 					{/each}

@@ -1,6 +1,6 @@
 <script>
   export let data;
-  export let selected;
+  export let selected = 0;
 
   let valid = true;
 
@@ -9,9 +9,12 @@
 
   let mapURLPrefix = "https://maps.google.com/maps/place?&amp&t=t&z=17&ll="
   let mapURLSuffix = "&output=embed"
-  let mapURL = mapURLPrefix + data[selected].lat + "," + data[selected].long + mapURLSuffix;
 
   console.log("infoBar", data)
+
+  function maps(s){
+    console.log(selected)
+  }
   
 </script>
 
@@ -29,19 +32,19 @@
       <p>Recorded on {dateFinal}</p>
     {/if}
   </div>
-  <div>
+  <div on:click={maps(selected)}>
     <slot/>
   </div>
   <div class="maps">
     {#each data as station, i}
-      <div class="map-{i}" class:selected="{selected != i}">
+      <div class='map map-{i}'>
         <iframe title="map" width='425' height='350' frameborder='0' 
             scrolling='no' marginheight='0' marginwidth='0'    
             src='{mapURLPrefix}{station.lat},{station.long}{mapURLSuffix}'>
         </iframe>
     </div>
     {/each}
-  </div>
+  </div>>
   <div class="footer">
     <p>Moving Water v1.0</p>
     <br/>
