@@ -33,7 +33,7 @@ let selected = 0; // current station (equivilant to index of station in array)
 // VISUALIZATION
 const sketch = (p5) => {
 		//https://www.openprocessing.org/sketch/157576
-		var num = 2000;
+		var num = 1000;
 		var noiseScale=100;
 		var particles = [num];
 		
@@ -76,11 +76,18 @@ const sketch = (p5) => {
 				this.update();
 			}
 			move(){
-				let angle= p5.noise(this.loc.x/noiseScale, this.loc.y/noiseScale)
+				let angle = p5.noise(this.loc.x/noiseScale, this.loc.y/noiseScale)
+				let d
 				this.dir.x = p5.cos(angle);
 				this.dir.y = p5.sin(angle);
 				var vel = this.dir.copy();
-				var d = (stations[selected].readings.value) * 2;  //direction change 
+
+				if(stations[selected].readings.value > 5 ){
+					d = (stations[selected].readings.value) / 5;
+				} else{
+					d = (stations[selected].readings.value) * 2;
+				}
+				//direction change 
 				vel.mult(this.speed*d); //vel = vel * (speed*d)
 				this.loc.add(vel); //loc = loc + vel
 			}
@@ -103,34 +110,31 @@ const sketch = (p5) => {
 
 </script>
 
-		{#await promise}
-			<div>loading...</div>
-			{:then stations}
-			<div class="app">
-				<InfoBar data={stations} bind:selected={selected}>
-					<p>Select Locale</p>
-					<select 
-						class='river-select'
-						bind:value={selected}
-					>
-						{#each stations as station, i}
-							<option value={i}>{station.label}</option>
-						{/each}
-    			</select>
-				</InfoBar>
-				<div class="river">
-					<P5 {sketch} />
-				</div>
+	{#await promise}
+		<div class="lds-ripple"><div></div><div></div></div>
+		{:then stations}
+		<div class="app">
+			<InfoBar data={stations} bind:selected={selected}>
+				<p id="locale">Select Locale</p>
+				<select 
+					class='river-select'
+					bind:value={selected}
+				>
+					{#each stations as station, i}
+						<option value={i}>{station.label}</option>
+					{/each}
+				</select>
+			</InfoBar>
+			<div class="river">
+				<P5 {sketch} />
 			</div>
-		{/await}
-
-
-
+		</div>
+	{/await}
 
 <style>
 	.app {
 		display: grid;
-		grid-template-columns: 35% 1fr;
+		grid-template-columns: auto 1fr;
 		height: 100%;
 	}
 
@@ -141,4 +145,49 @@ const sketch = (p5) => {
 	select {
     font-size: 18px;
   }
+
+	#locale {
+		margin-top: 2rem;
+		font-family: monospace;
+		margin-bottom: 5px;
+		font-size: 14px;
+		color: #575656;
+	}
+
+	.lds-ripple {
+		display: inline-block;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -40px;
+		margin-left: -40px;
+		width: 80px;
+		height: 80px;
+	}
+	.lds-ripple div {
+		position: absolute;
+		border: 4px solid black;
+		opacity: 1;
+		border-radius: 50%;
+		animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+	}
+	.lds-ripple div:nth-child(2) {
+		animation-delay: -0.5s;
+	}
+	@keyframes lds-ripple {
+		0% {
+			top: 36px;
+			left: 36px;
+			width: 0;
+			height: 0;
+			opacity: 1;
+		}
+		100% {
+			top: 0px;
+			left: 0px;
+			width: 72px;
+			height: 72px;
+			opacity: 0;
+		}
+	}
 </style>

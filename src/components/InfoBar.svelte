@@ -1,10 +1,17 @@
 <script>
   export let data;
-  console.log("infoBar", data)
+  export let selected;
 
-  export let selected = 0;
   let valid = true;
 
+  let date = new Date(data[selected].readings.date).toUTCString();
+  let dateFinal = date.replace('00:00:00 GMT', '')
+
+  let mapURLPrefix = "https://maps.google.com/maps/place?&amp&t=t&z=17&ll="
+  let mapURLSuffix = "&output=embed"
+  let mapURL = mapURLPrefix + data[selected].lat + "," + data[selected].long + mapURLSuffix;
+
+  console.log("infoBar", data)
   
 </script>
 
@@ -19,15 +26,27 @@
       <p style="color: red;">No valid readings in the past 7 days.</p>
       {:else}
       <p>{data[selected].measure}</p>
-      <p>Recored on {data[selected].readings.date}</p>
+      <p>Recorded on {dateFinal}</p>
     {/if}
   </div>
-  <div class="river-select-container">
-    <!-- moved selected to app.svelte so p5 sketch can access it -->
+  <div>
     <slot/>
   </div>
-  <div class="map"></div>
-  <div class="footer">Created by Matt Gluf</div>
+  <div class="maps">
+    {#each data as station, i}
+      <div class="map-{i}" class:selected="{selected != i}">
+        <iframe title="map" width='425' height='350' frameborder='0' 
+            scrolling='no' marginheight='0' marginwidth='0'    
+            src='{mapURLPrefix}{station.lat},{station.long}{mapURLSuffix}'>
+        </iframe>
+    </div>
+    {/each}
+  </div>
+  <div class="footer">
+    <p>Moving Water v1.0</p>
+    <br/>
+    <p>Created by <a href="https://www.mgluf.com/">Matt Gluf</a></p>
+  </div>
 </nav>
 
 <style>
@@ -70,6 +89,15 @@
     bottom: 1rem;
     padding-left: 1px;
     font-family: monospace;
+  }
+
+  .footer p:first-of-type {
+    color: black;
+    font-weight: bold;
+  }
+
+  .footer p {
+    margin: 0;
   }
 
 </style>

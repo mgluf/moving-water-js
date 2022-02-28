@@ -10,6 +10,8 @@ export default function parseStations(data){
           label: obj.label,
           notation: obj.notation,
           river: obj.riverName,
+          lat: obj.lat,
+          long: obj.long,
           // It appears the "Qualified daily mean flow timeseries..." measure is always the second one if there are more than one.
           // If the wrong label and unit shows up at some point may need to figure out how to isolate daily mean a different way.
           measure: obj.measures[1].label,
@@ -24,6 +26,8 @@ export default function parseStations(data){
           label: obj.label,
           notation: obj.notation,
           river: obj.riverName,
+          lat: obj.lat,
+          long: obj.long,
           measure: obj.measures.label,
           unit: obj.measures.unitName,
         }
