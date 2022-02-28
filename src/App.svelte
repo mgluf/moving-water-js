@@ -33,8 +33,9 @@ let selected = 0; // current station (equivilant to index of station in array)
 // VISUALIZATION
 const sketch = (p5) => {
 		//https://www.openprocessing.org/sketch/157576
-		var num = 1000;
-		var noiseScale=100;
+		p5.disableFriendlyErrors = true;
+		var num = 70;
+		var noiseScale=200;
 		var particles = [num];
 		
 		p5.setup = () => {
@@ -55,12 +56,23 @@ const sketch = (p5) => {
 			p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
 		}
 		p5.draw = () => {
-			p5.fill(0, 10);
+			let start = p5.millis();
+
+			// optimization bottleneck. Link below outlines storing generated particles in an array 
+			// and passing them between a stored and stream array in order to prevent new particles 
+			// from being created constantly
+			// https://forum.processing.org/two/discussion/25254/performance-optimization-for-p5-js-of-particles-system
+
+			p5.fill(0, 20);
 			p5.noStroke();
 			p5.rect(0, 0, p5.width, p5.height);
 			for (let i=0; i<particles.length; i++) {
 				particles[i].run();
 			}
+
+			let end = p5.millis();
+			let elapsed = end - start;
+			console.log("Draw: " + elapsed + "ms.")
 		}
 		
 		class Particle{
@@ -131,7 +143,7 @@ const sketch = (p5) => {
 <style>
 	.app {
 		display: grid;
-		grid-template-columns: auto 1fr;
+		grid-template-columns: 30% 1fr;
 		height: 100%;
 	}
 

@@ -12,8 +12,8 @@
 
   console.log("infoBar", data)
 
-  function maps(s){
-    console.log(selected)
+  function mapLoaded(){
+    console.log("map loaded")
   }
   
 </script>
@@ -32,19 +32,20 @@
       <p>Recorded on {dateFinal}</p>
     {/if}
   </div>
-  <div on:click={maps(selected)}>
+  <div>
     <slot/>
   </div>
   <div class="maps">
     {#each data as station, i}
-      <div class='map map-{i}'>
-        <iframe title="map" width='425' height='350' frameborder='0' 
+      <div class='map map-{i}' class:show={selected === i}>
+        <iframe title="map" width='300' height='200' frameborder='0' 
             scrolling='no' marginheight='0' marginwidth='0'    
-            src='{mapURLPrefix}{station.lat},{station.long}{mapURLSuffix}'>
+            src='{mapURLPrefix}{station.lat},{station.long}{mapURLSuffix}'
+        >
         </iframe>
     </div>
     {/each}
-  </div>>
+  </div>
   <div class="footer">
     <p>Moving Water v1.0</p>
     <br/>
@@ -81,10 +82,13 @@
     font-size: 14px;
     font-family: monospace;
     color: #575656;
+    /* max-width: 70%; */
   }
 
   .measure-data h3{
     color: black;
+    font-size: 24px;
+    margin-top: 0;
   }
 
   .footer{
@@ -102,5 +106,27 @@
   .footer p {
     margin: 0;
   }
+
+  .map {
+    display: none;
+  }
+
+  .map iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+  }
+
+  .map.show {
+    display: block;
+    overflow:hidden;
+    padding-bottom:80%;
+    position:relative;
+    height:0;
+  }
+
+  
 
 </style>
