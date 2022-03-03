@@ -1,9 +1,9 @@
 # moving-water
-Moving water.
+A moving water visualization rendered by p5.js fueled by data from real rivers in the United Kingdom. Data captured and made available by The Department for Environment Food & Rural Affairs [Hydrology API](https://environment.data.gov.uk/hydrology/doc/reference).
 
 ## getting started
 
-Then, start [Rollup](https://rollupjs.org):
+Start [Rollup](https://rollupjs.org):
 
 ```bash
 npm run dev
