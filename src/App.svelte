@@ -34,7 +34,7 @@ let selected = 0; // current station (equivilant to index of station in array)
 const sketch = (p5) => {
 		//https://www.openprocessing.org/sketch/157576
 		p5.disableFriendlyErrors = true;
-		var num = 70;
+		var num = 1000;
 		var noiseScale=200;
 		var particles = [num];
 		
