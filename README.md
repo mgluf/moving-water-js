@@ -1,19 +1,7 @@
-# Svelte Example
+# moving-water
+Moving water.
 
-This directory is a brief example of a [Svelte](https://svelte.dev/) site that can be deployed with Vercel and zero-configuration. If you need to use API Routes, we recommend using our [SvelteKit example](https://github.com/vercel/vercel/tree/main/examples/sveltekit).
-
-## Deploy Your Own
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/svelte&template=svelte)
-
-_Live Example: https://svelte.examples.vercel.com_
-
-## Getting Started
-
-```bash
-npx degit sveltejs/template svelte-app
-npm install
-```
+## getting started
 
 Then, start [Rollup](https://rollupjs.org):
 
