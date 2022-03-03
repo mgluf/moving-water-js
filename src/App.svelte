@@ -39,7 +39,7 @@ const sketch = (p5) => {
 		var particles = [num];
 		
 		p5.setup = () => {
-			p5.createCanvas(p5.windowWidth, p5.windowHeight);
+			p5.createCanvas((p5.windowWidth * .7), p5.windowHeight);
 			p5.noStroke();
 			for (let i=0; i<num; i++) {
 				//x value start slightly outside the right of canvas, z value how close to viewer
@@ -56,7 +56,7 @@ const sketch = (p5) => {
 			p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
 		}
 		p5.draw = () => {
-			let start = p5.millis();
+			// let start = p5.millis();
 
 			// optimization bottleneck. Link below outlines storing generated particles in an array 
 			// and passing them between a stored and stream array in order to prevent new particles 
@@ -70,9 +70,9 @@ const sketch = (p5) => {
 				particles[i].run();
 			}
 
-			let end = p5.millis();
-			let elapsed = end - start;
-			console.log("Draw: " + elapsed + "ms.")
+			// let end = p5.millis();
+			// let elapsed = end - start;
+			// console.log("Draw: " + elapsed + "ms.")
 		}
 		
 		class Particle{
@@ -145,6 +145,7 @@ const sketch = (p5) => {
 		display: grid;
 		grid-template-columns: 30% 1fr;
 		height: 100%;
+    overflow: hidden;
 	}
 
 	.river {
