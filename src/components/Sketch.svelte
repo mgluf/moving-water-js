@@ -1,9 +1,10 @@
+<script>
+  import P5 from 'p5-svelte';
 
- const initSketch = (stations, selected) => {
-  console.log('initSketch: selected: ', selected);
-  if (!stations) return () => { };
+  export let station;
+
   const sketch = (p5) => {
-    console.log('initSketch: sketc: selected: ', selected);
+    console.log('initSketch: sketch: station: ', station);
     //https://www.openprocessing.org/sketch/157576
     p5.disableFriendlyErrors = true;
     var num = 1000;
@@ -66,11 +67,10 @@
         this.dir.y = p5.sin(angle);
         var vel = this.dir.copy();
 
-        // const station = stations[selected];
-        if(stations[selected].readings.value > 5 ){
-          d = (stations[selected].readings.value) / 5;
+        if(station.readings.value > 5 ){
+          d = (station.readings.value) / 5;
         } else{
-          d = (stations[selected].readings.value) * 2;
+          d = (station.readings.value) * 2;
         }
         //direction change 
         vel.mult(this.speed*d); //vel = vel * (speed*d)
@@ -90,8 +90,6 @@
       }
     }
   }
+</script>
 
-  return sketch;
-}
-
-export default initSketch;
+<P5 {sketch} />

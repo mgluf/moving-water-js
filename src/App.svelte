@@ -1,16 +1,16 @@
 <script>
-import P5 from 'p5-svelte';
-import initSketch from './sketch.js';
-
 import parseStations  from "./data-functions/parseStations.js";
 import fetchReadings from "./data-functions/fetchReadings.js";
 import InfoBar from "./components/InfoBar.svelte"
+import Sketch from "./components/Sketch.svelte"
 
-// let stations
+// The index of the current station
+let selected = 0;
 
+// Load data from API
 // Pull 20 Stations with a waterFlow measurement
-async function allData()  {
-		return await fetch("https://environment.data.gov.uk/hydrology/id/stations?_limit=20&observedProperty=waterFlow")
+async function load()  {
+	return await fetch("https://environment.data.gov.uk/hydrology/id/stations?_limit=20&observedProperty=waterFlow")
 		.then(response => response.json())
 		.then(async (data) => {
 			console.log("raw", data);
@@ -18,59 +18,34 @@ async function allData()  {
 			let stations = parseStations(data)
 			// pull readings from each station from 4 days ago to today and add parsed readings to them
 			for (const station of stations) {station.readings = await fetchReadings(station.notation, 7);}
-			// console.log("onMount", stations)
 
       console.log(stations);
 			return stations;
 	
 		}).catch(error => {
 			console.log(error);
-			return [];
-		});
-
-  // return stations
+		})
 }
-
-
-let selected = 0; // current station (equivilant to index of station in array)
-let stations;
-// Await allData();
-const load = async () => {
-	stations = await allData();
-	// const sketch = initSketch(stations, selected);
-
-	return stations
-}
-
-const sketch = initSketch(stations, selected);
-
-// $: {
-	
-// 	console.log(selected);
-// }
-
-// let promise = allData();
-// console.log(promise);
 
 </script>
 
-	{#await load()}
-		<div class="lds-ripple"><div></div><div></div></div>
-		{:then stations}
-		<div class="app">
-			<InfoBar data={stations} bind:selected={selected}>
-				<p id="locale">Select Locale</p>
-				<select class='river-select' bind:value={selected}>
-					{#each stations as station, i}
-						<option value={i}>{station.label}</option>
-					{/each}
-				</select>
-			</InfoBar>
-			<div class="river">
-				<P5 sketch={sketch} />
-			</div>
+{#await load()}
+	<div class="lds-ripple"><div></div><div></div></div>
+	{:then stations}
+	<div class="app">
+		<InfoBar data={stations} bind:selected={selected}>
+			<p id="locale">Select Locale</p>
+			<select class='river-select' bind:value={selected}>
+				{#each stations as station, i}
+					<option value={i}>{station.label}</option>
+				{/each}
+			</select>
+		</InfoBar>
+		<div class="river">
+			<Sketch station={stations[selected]} />
 		</div>
-	{/await}
+	</div>
+{/await}
 
 <style>
 	.app {
