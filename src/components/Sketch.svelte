@@ -16,11 +16,10 @@
       p5.noStroke();
       for (let i=0; i<num; i++) {
         //x value start slightly outside the right of canvas, z value how close to viewer
-        var loc = p5.createVector(p5.random(p5.width*1.2), p5.random(p5.height), 2);
+        var loc = p5.createVector(p5.random(p5.width*-1.2), p5.random(p5.height), 2);
         var angle = 0; //any value to initialize
         var dir = p5.createVector(p5.cos(angle), p5.sin(angle));
         var speed = p5.random(0.5,2);
-        // var speed = random(5,map(mouseX,0,width,5,20));   // faster
         particles[i]= new Particle(loc, dir, speed);
       }
     }
@@ -29,7 +28,6 @@
       p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
     }
     p5.draw = () => {
-      let start = p5.millis();
 
       // optimization bottleneck. Link below outlines storing generated particles in an array 
       // and passing them between a stored and stream array in order to prevent new particles 
@@ -42,10 +40,6 @@
       for (let i=0; i<particles.length; i++) {
         particles[i].run();
       }
-
-      let end = p5.millis();
-      let elapsed = end - start;
-      // console.log("Draw: " + elapsed + "ms.")
     }
     
     class Particle{
