@@ -24,7 +24,7 @@
     <p>{data[selected].unit}</p>
   </div>
   <div class="measure-data">
-    <h3>{data[selected].river}</h3>
+    <!-- <h2>{data[selected].label}</h2> -->
     {#if data[selected].readings.value === 0}
       <p style="color: red;">No valid readings in the past 7 days.</p>
       {:else}
@@ -59,8 +59,8 @@
     background-color: lightgrey;
     margin: 0;
     padding: 0;
-    height: 100%;
-    padding:1rem;
+    padding: 1.25rem;
+
   }
 
   .value-measure {
@@ -70,32 +70,23 @@
 
   .value-measure h2 {
     margin: 0;
-    font-size: 36px;
+    font-size: 2rem;
   }
 
   .value-measure p {
-    margin-left: .5rem;
-    font-family: monospace;
+    margin: 0 0 0 .5rem;
   }
 
   .measure-data {
     font-size: 14px;
-    font-family: monospace;
     color: #575656;
     /* max-width: 70%; */
-  }
-
-  .measure-data h3{
-    color: black;
-    font-size: 24px;
-    margin-top: 0;
   }
 
   .footer{
     position: fixed;
     bottom: 1rem;
     padding-left: 1px;
-    font-family: monospace;
   }
 
   .footer p:first-of-type {
@@ -125,6 +116,32 @@
     padding-bottom:80%;
     position:relative;
     height:0;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .map.show {
+      padding-bottom: 40%;
+    }
+    .info-bar {
+      grid-row: 2;
+      padding: .5rem;
+    }
+
+    .footer {
+      display: block;
+      font-size: 12px;
+    }
+
+    .measure-data p:last-of-type {
+      margin-bottom: 0;
+    }
+
+  }
+
+  @media only screen and (max-width: 599px) {
+    .maps {
+      display: none;
+    }
   }
 
   

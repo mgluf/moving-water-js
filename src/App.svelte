@@ -10,13 +10,13 @@ let selected = 0;
 // Load data from API
 // Pull 20 Stations with a waterFlow measurement
 async function load()  {
-	return await fetch("https://environment.data.gov.uk/hydrology/id/stations?_limit=20&observedProperty=waterFlow")
+	return await fetch("https://environment.data.gov.uk/hydrology/id/stations?_limit=25&observedProperty=waterFlow")
 		.then(response => response.json())
 		.then(async (data) => {
 			console.log("raw", data);
       // filter unwanted data from station pull and build stations object
 			let stations = parseStations(data)
-			// pull readings from each station from 4 days ago to today and add parsed readings to them
+			// pull readings from each station from 7 days ago to today and add parsed readings to them
 			for (const station of stations) {station.readings = await fetchReadings(station.notation, 7);}
 
       console.log(stations);
@@ -29,15 +29,21 @@ async function load()  {
 
 </script>
 
+<svelte:head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</svelte:head>
+
 {#await load()}
 	<div class="lds-ripple"><div></div><div></div></div>
 	{:then stations}
 	<div class="app">
 		<InfoBar data={stations} bind:selected={selected}>
-			<p id="locale">Select Locale</p>
+			<p id="locale">Select River</p>
 			<select class='river-select' bind:value={selected}>
 				{#each stations as station, i}
-					<option value={i}>{station.label}</option>
+					<option value={i}>{station.river}</option>
 				{/each}
 			</select>
 		</InfoBar>
@@ -53,6 +59,7 @@ async function load()  {
 		grid-template-columns: 30% 1fr;
 		height: 100%;
     overflow: hidden;
+    font-family: IBM Plex Mono;
 	}
 
 	.river {
@@ -60,12 +67,13 @@ async function load()  {
 	}
 
 	select {
-    font-size: 18px;
+    font-size: 1.2rem;
+    margin: 0 0 0.5em -1px;
+    background-color: white;
   }
 
 	#locale {
 		margin-top: 2rem;
-		font-family: monospace;
 		margin-bottom: 5px;
 		font-size: 14px;
 		color: #575656;
@@ -107,4 +115,15 @@ async function load()  {
 			opacity: 0;
 		}
 	}
+
+  @media only screen and (max-width: 768px) {
+    .app {
+      grid-template-columns: auto;
+      grid-template-rows: 1fr 1fr;
+    }
+
+    #locale {
+      margin-top: 1rem;
+    }
+  }
 </style>

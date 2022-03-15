@@ -7,12 +7,18 @@
     console.log('initSketch: sketch: station: ', station);
     //https://www.openprocessing.org/sketch/157576
     p5.disableFriendlyErrors = true;
-    var num = 1000;
+    var num = 500;
     var noiseScale=200;
     var particles = [num];
+    let widthVariable = 0.7;
+    let heightVariable = 1;
     
     p5.setup = () => {
-      p5.createCanvas((p5.windowWidth * .7), p5.windowHeight);
+      if(p5.windowWidth < 768){
+        widthVariable = 1;
+        heightVariable = .6;
+      }
+      p5.createCanvas((p5.windowWidth * widthVariable), p5.windowHeight * heightVariable);
       p5.noStroke();
       for (let i=0; i<num; i++) {
         //x value start slightly outside the right of canvas, z value how close to viewer
@@ -71,10 +77,8 @@
         this.loc.add(vel); //loc = loc + vel
       }
       checkEdges(){
-        //float distance = dist(width/2, height/2, loc.x, loc.y);
-        //if (distance>150) {
         if (this.loc.x<0 || this.loc.x>p5.width || this.loc.y<0 || this.loc.y>p5.height) {    
-          this.loc.x = p5.random(p5.width*1.2);
+          this.loc.x = p5.random(p5.width * 1.2);
           this.loc.y = p5.random(p5.height);
         }
       }
