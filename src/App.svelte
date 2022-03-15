@@ -30,6 +30,7 @@ async function load()  {
 </script>
 
 <svelte:head>
+	<title>Moving Water</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
@@ -70,12 +71,13 @@ async function load()  {
     font-size: 1.2rem;
     margin: 0 0 0.5em -1px;
     background-color: white;
+		max-width: 100%;
   }
 
 	#locale {
 		margin-top: 2rem;
 		margin-bottom: 5px;
-		font-size: 14px;
+		font-size: .9rem;
 		color: #292929;
 	}
 
