@@ -127,6 +127,11 @@
       font-size: .8rem;
     }
 
+    .measure-data p {
+      margin-top: .5rem;
+      margin-bottom: .5rem;
+    }
+
     .measure-data p:last-of-type {
       margin-bottom: 0;
     }

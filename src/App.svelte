@@ -125,7 +125,7 @@ async function load()  {
     }
 
     #locale {
-      margin-top: 1rem;
+      margin-top: .65rem;
     }
   }
 </style>
