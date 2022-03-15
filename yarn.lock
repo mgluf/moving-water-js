@@ -606,7 +606,12 @@
   dependencies:
     "has-flag" "^4.0.0"
 
-"svelte@^3.0.0", "svelte@>=3.5.0":
+"svelte-simple-modal@^1.3.1":
+  "integrity" "sha512-xBeK7VkGBuvqIm1J5eqnLqGIRKDtnsYzu8yVCLuO4rIuv4BMj4S6r0PGMgd4EFMgZwhmmqZPdrsPCDlDC6HUCw=="
+  "resolved" "https://registry.npmjs.org/svelte-simple-modal/-/svelte-simple-modal-1.3.1.tgz"
+  "version" "1.3.1"
+
+"svelte@^3.0.0", "svelte@^3.31.2", "svelte@>=3.5.0":
   "integrity" "sha512-T2pMPHrxXp+SM8pLLUXLQgkdo+JhTls7aqj9cD7z8wT2ccP+OrCAmtQS7h6pvMjitaZhXFNnCK582NxDpy8HSw=="
   "resolved" "https://registry.npmjs.org/svelte/-/svelte-3.43.0.tgz"
   "version" "3.43.0"

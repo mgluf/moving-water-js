@@ -1,8 +1,9 @@
 <script>
+  import Content from './Content.svelte';
+  import Modal from 'svelte-simple-modal';
+
   export let data;
   export let selected = 0;
-
-  let valid = true;
 
   let date = new Date(data[selected].readings.date).toUTCString();
   let dateFinal = date.replace('00:00:00 GMT', '')
@@ -10,11 +11,7 @@
   let mapURLPrefix = "https://maps.google.com/maps/place?&amp&t=t&z=17&ll="
   let mapURLSuffix = "&output=embed"
 
-  console.log("infoBar", data)
-
-  function mapLoaded(){
-    console.log("map loaded")
-  }
+  // console.log("infoBar", data)
   
 </script>
 
@@ -24,7 +21,6 @@
     <p>{data[selected].unit}</p>
   </div>
   <div class="measure-data">
-    <!-- <h2>{data[selected].label}</h2> -->
     {#if data[selected].readings.value === 0}
       <p style="color: red;">No valid readings in the past 7 days.</p>
       {:else}
@@ -47,7 +43,7 @@
     {/each}
   </div>
   <div class="footer">
-    <p>Moving Water v1.0</p>
+    <Modal><Content /></Modal>
     <br/>
     <p>Created by <a href="https://www.mgluf.com/">Matt Gluf</a></p>
   </div>
@@ -87,11 +83,6 @@
     position: fixed;
     bottom: 1rem;
     padding-left: 1px;
-  }
-
-  .footer p:first-of-type {
-    color: black;
-    font-weight: bold;
   }
 
   .footer p {

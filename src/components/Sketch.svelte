@@ -4,7 +4,7 @@
   export let station;
 
   const sketch = (p5) => {
-    console.log('initSketch: sketch: station: ', station);
+    // console.log('initSketch: sketch: station: ', station);
     //https://www.openprocessing.org/sketch/157576
     p5.disableFriendlyErrors = true;
     var num = 500;

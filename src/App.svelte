@@ -19,7 +19,7 @@ async function load()  {
 			// pull readings from each station from 7 days ago to today and add parsed readings to them
 			for (const station of stations) {station.readings = await fetchReadings(station.notation, 7);}
 
-      console.log(stations);
+      // console.log(stations);
 			return stations;
 	
 		}).catch(error => {
