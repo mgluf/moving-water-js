@@ -15,7 +15,7 @@
 </script>
 
 
-<button on:click={showSurprise}>Moving Water 1.0</button>
+<button on:click={showSurprise}>About Moving Water</button>
 
 <style>
   button {

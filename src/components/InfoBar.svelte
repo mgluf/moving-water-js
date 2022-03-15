@@ -44,8 +44,6 @@
   </div>
   <div class="footer">
     <Modal><Content /></Modal>
-    <br/>
-    <p>Created by <a href="https://www.mgluf.com/">Matt Gluf</a></p>
   </div>
 </nav>
 
@@ -119,7 +117,7 @@
     }
 
     .footer {
-      display: block;
+      display: contents;
       font-size: 12px;
     }
 
