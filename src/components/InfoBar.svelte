@@ -117,8 +117,9 @@
     }
 
     .footer {
+      position: fixed;
+      bottom: 5px;
       display: inline-block;
-      font-size: 12px;
     }
 
     .measure-data {

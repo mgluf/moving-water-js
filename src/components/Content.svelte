@@ -21,6 +21,7 @@
   button {
     color: white;
     background-color: #a0a0a0;
+    border: 0px solid transparent;
   }
 
   button:hover {
