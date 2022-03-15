@@ -76,7 +76,7 @@ async function load()  {
 		margin-top: 2rem;
 		margin-bottom: 5px;
 		font-size: 14px;
-		color: #575656;
+		color: #292929;
 	}
 
 	.lds-ripple {

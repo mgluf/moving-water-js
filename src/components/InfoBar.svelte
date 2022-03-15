@@ -72,7 +72,7 @@
   }
 
   .measure-data {
-    font-size: 14px;
+    font-size: 1rem;
     color: #575656;
     /* max-width: 70%; */
   }
@@ -117,8 +117,12 @@
     }
 
     .footer {
-      display: contents;
+      display: inline-block;
       font-size: 12px;
+    }
+
+    .measure-data {
+      font-size: .8rem;
     }
 
     .measure-data p:last-of-type {
