@@ -1,8 +1,24 @@
 <script>
 import parseStations  from "./data-functions/parseStations.js";
 import fetchReadings from "./data-functions/fetchReadings.js";
-import InfoBar from "./components/InfoBar.svelte"
-import Sketch from "./components/Sketch.svelte"
+import InfoBar from "./components/InfoBar.svelte";
+import Sketch from "./components/Sketch.svelte";
+
+import { onMount } from "svelte";
+
+onMount(() => {
+
+    window.addEventListener("scroll", preventMotion, false);
+    window.addEventListener("touchmove", preventMotion, false);
+
+    function preventMotion(event)
+    {
+        window.scrollTo(0, 0);
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+  })
 
 // The index of the current station
 let selected = 0;
@@ -27,9 +43,12 @@ async function load()  {
 		})
 }
 
+
+
 </script>
 
 <svelte:head>
+  <meta name="viewport" content="user-scalable=no" />
 	<title>Moving Water</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,6 +79,7 @@ async function load()  {
 		grid-template-columns: 30% 1fr;
 		height: 100%;
     overflow: hidden;
+    position: relative;
     font-family: IBM Plex Mono;
 	}
 
