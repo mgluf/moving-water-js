@@ -6,10 +6,9 @@ import Sketch from "./components/Sketch.svelte";
 
 import { onMount } from "svelte";
 
-onMount(() => {
+let canvas
 
-    var el = document.getElementById("defaultCanvas0");
-    el.addEventListener("touch", preventMotion, false);
+onMount(() => {
 
     window.addEventListener("scroll", preventMotion, false);
     window.addEventListener("touchmove", preventMotion, false);
@@ -88,6 +87,7 @@ async function load()  {
 
 	.river {
 		background-color: black;
+    touch-action: none;
 	}
 
 	select {
