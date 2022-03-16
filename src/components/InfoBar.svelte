@@ -54,7 +54,6 @@
     margin: 0;
     padding: 0;
     padding: 1.25rem;
-
   }
 
   .value-measure {
@@ -81,10 +80,6 @@
     position: fixed;
     bottom: 1rem;
     padding-left: 1px;
-  }
-
-  .footer p {
-    margin: 0;
   }
 
   .map {
@@ -114,6 +109,7 @@
     .info-bar {
       grid-row: 2;
       padding: .5rem;
+      touch-action: none;
     }
 
     .footer {
