@@ -48,7 +48,7 @@ async function load()  {
 </script>
 
 <svelte:head>
-  <meta name="viewport" content="user-scalable=no" />
+  <!-- <meta name="viewport" content="user-scalable=no" /> -->
 	<title>Moving Water</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
