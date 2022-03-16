@@ -8,6 +8,9 @@ import { onMount } from "svelte";
 
 onMount(() => {
 
+    var el = document.getElementById("defaultCanvas0");
+    el.addEventListener("touch", preventMotion, false);
+
     window.addEventListener("scroll", preventMotion, false);
     window.addEventListener("touchmove", preventMotion, false);
 
