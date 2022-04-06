@@ -11,7 +11,7 @@
   <div role="dialog" class="modal" transition:fly={{ y: 50 }} on:introstart on:outroend>
     <div class="contents">
       <h2>About</h2>
-      <p>Moving Water is an interactive data visualization illustrating how fast water is flowing in Rivers across the United Kingdom. It is rendered by <a href="https://p5js.org/">p5.js</a> and fueled by data from real rivers via <a href="https://environment.data.gov.uk/hydrology/doc/reference">Hydrology API</a></p>
+      <p>Moving Water is an interactive data visualization illustrating how fast water is flowing in rivers across the United Kingdom. It is rendered by <a href="https://p5js.org/">p5.js</a> and fueled by data from real rivers via <a href="https://environment.data.gov.uk/hydrology/doc/reference">Hydrology API</a></p>
       <p>Created by <a href="https://www.mgluf.com/">Matt Gluf</a></p>
       <h2>Credits</h2>
       <p><a href="https://matthewia.com/">Matthew Alicea</a> - Code Consultant</p>
