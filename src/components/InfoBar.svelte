@@ -1,6 +1,7 @@
 <script>
-  import Content from './Content.svelte';
-  import Modal from 'svelte-simple-modal';
+  import { fade } from 'svelte/transition'
+  import { Modals, closeModal, openModal } from 'svelte-modals'
+  import Modal from './modal.svelte'
 
   export let data;
   export let selected = 0;
@@ -12,6 +13,21 @@
   let mapURLSuffix = "&output=embed"
 
   // console.log("infoBar", data)
+
+  import { onMount } from "svelte";
+
+
+onMount(() => {
+  openModal(Modal, {
+      //pass to modal
+		})
+  })
+
+  function open() {
+		openModal(Modal, {
+      //pass to modal
+		})
+	}
   
 </script>
 
@@ -43,9 +59,17 @@
     {/each}
   </div>
   <div class="footer">
-    <Modal><Content /></Modal>
+    <button on:click={()=> open()}>About Moving Water</button>
   </div>
 </nav>
+<Modals>
+  <div
+    slot="backdrop"
+    class="backdrop"
+    transition:fade
+    on:click={closeModal}
+  />
+</Modals>
 
 <style>
 
@@ -100,6 +124,16 @@
     padding-bottom:80%;
     position:relative;
     height:0;
+  }
+
+  .backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 900;
   }
 
   @media only screen and (max-width: 768px) {
