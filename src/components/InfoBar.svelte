@@ -6,22 +6,14 @@
   export let data;
   export let selected = 0;
 
-  let date = new Date(data[selected].readings.date).toUTCString();
-  let dateFinal = date.replace('00:00:00 GMT', '')
+  // let date = new Date(data[selected].readings.date).toUTCString();
+  // let dateFinal = date.replace('00:00:00 GMT', '')
+  // console.log(dateFinal)
 
   let mapURLPrefix = "https://maps.google.com/maps/place?&amp&t=t&z=17&ll="
   let mapURLSuffix = "&output=embed"
 
   // console.log("infoBar", data)
-
-  import { onMount } from "svelte";
-
-
-onMount(() => {
-  openModal(Modal, {
-      //pass to modal
-		})
-  })
 
   function open() {
 		openModal(Modal, {
@@ -34,14 +26,22 @@ onMount(() => {
 <nav class="info-bar">
   <div class="value-measure">
     <h2>{data[selected].readings.value}</h2>
-    <p>{data[selected].unit}</p>
+    {#if !data[selected].unit}
+       m3/s
+      {:else}
+      <p>{data[selected].unit}</p>
+    {/if}
   </div>
   <div class="measure-data">
     {#if data[selected].readings.value === 0}
       <p style="color: red;">No valid readings in the past 7 days.</p>
       {:else}
-      <p>{data[selected].measure}</p>
-      <p>Recorded on {dateFinal}</p>
+      {#if !data[selected].measure}
+          Daily min Volume Flow in meters cubed per second.
+         {:else}
+         <p>{data[selected].measure}</p>
+      {/if}
+      <p>Recorded on {data[selected].readings.date}</p>
     {/if}
   </div>
   <div>

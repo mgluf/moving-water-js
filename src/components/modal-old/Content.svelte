@@ -8,7 +8,6 @@
 
 	onMount(() => {
     open(Popup);
-    console.log('modal')
   })
 
 

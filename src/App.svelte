@@ -31,14 +31,17 @@ async function load()  {
 	return await fetch("https://environment.data.gov.uk/hydrology/id/stations?_limit=25&observedProperty=waterFlow")
 		.then(response => response.json())
 		.then(async (data) => {
-			console.log("raw", data);
+			// console.log("raw", data);
       // filter unwanted data from station pull and build stations object
 			let stations = parseStations(data)
 			// pull readings from each station from 7 days ago to today and add parsed readings to them
 			for (const station of stations) {station.readings = await fetchReadings(station.notation, 7);}
 
       // console.log(stations);
-			return stations;
+
+			let removeBlankStations = stations.filter(station => station.readings.value != 0)
+
+			return removeBlankStations;
 	
 		}).catch(error => {
 			console.log(error);
@@ -59,18 +62,18 @@ async function load()  {
 
 {#await load()}
 	<div class="lds-ripple"><div></div><div></div></div>
-	{:then stations}
+	{:then removeBlankStations}
 	<div class="app">
-		<InfoBar data={stations} bind:selected={selected}>
+		<InfoBar data={removeBlankStations} bind:selected={selected}>
 			<p id="locale">Select River</p>
 			<select class='river-select' bind:value={selected}>
-				{#each stations as station, i}
+				{#each removeBlankStations as station, i}
 					<option value={i}>{station.river}</option>
 				{/each}
 			</select>
 		</InfoBar>
 		<div class="river">
-			<Sketch station={stations[selected]} />
+			<Sketch station={removeBlankStations[selected]} />
 		</div>
 	</div>
 {/await}

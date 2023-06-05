@@ -3,12 +3,14 @@ let parsed = []
 let items = readings.items
 
 items.map(reading =>{
-  parsed.push(
-    {
-      value: reading.value,
-      date: reading.date
-    }
-  )
+  if(reading.value) {
+    parsed.push(
+      {
+        value: reading.value,
+        date: reading.date
+      }
+    )
+  }
 })
 
 let removeUndefined = parsed.filter( parsedReading => parsedReading.value != undefined);
